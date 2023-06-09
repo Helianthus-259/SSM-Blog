@@ -30,14 +30,14 @@
         <div class="card">
             <img src="img/doge.jpg" class="avtar" alt="">
             <h3 id="username"></h3>
-            <a href="http:www.github.com">github 地址</a>
+            <a href="https://github.com/xxxxxx" id="githubaddress" target="_blank">github 地址</a>
             <div class="counter">
                 <span>文章</span>
                 <span>分类</span>
             </div>
-            <div class="counter">
-                <span>2</span>
-                <span>1</span>
+            <div class="counter" id="counterDiv">
+                <span>-</span>
+                <span>-</span>
             </div>
         </div>
     </div>
@@ -83,9 +83,12 @@
                                     +'</div>';
                         });
                         jQuery("#artlistDiv").html(html);
+                        // 更新计数器
+                        jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
                     }else{
                         // 此人未发表任何文章
                         jQuery("#artlistDiv").html("<h1>暂无数据</h1>");
+                        jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
                     }
                 },
                 error:function(err){
@@ -108,6 +111,15 @@
                 success:function(result){
                     if(result.code==200 && result.data!=null){
                         jQuery("#username").text(result.data.username);
+                        var githubaddress = result.data.githubaddress;
+                        if(githubaddress){
+                            // 将地址替换为真实的 GitHub 地址并赋值给 href 属性
+                            jQuery("#githubaddress").attr("href", "https://github.com/"+githubaddress);
+                            // 将地址直接显示在链接文本中
+                            jQuery("#githubaddress").text(githubaddress);
+                        }else{
+                            jQuery("#githubaddress").hide()
+                        }
                     }
                 },
                 error:function(err){

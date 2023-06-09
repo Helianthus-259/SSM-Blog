@@ -11,8 +11,8 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public int add(String username,String password){
-        return userMapper.add(username,password);
+    public int add(String username,String password,String githubaddress){
+        return userMapper.add(username,password,githubaddress);
     }
 
     public UserInfo login(String username, String password){

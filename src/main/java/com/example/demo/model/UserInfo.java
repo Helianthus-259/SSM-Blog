@@ -8,6 +8,7 @@ public class UserInfo {
     private String username;
     private String password;
     private String photo;
+    private String githubaddress;
     private String createtime;
     private String updatetime;
     private String state;

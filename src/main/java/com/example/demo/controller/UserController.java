@@ -24,14 +24,14 @@ public class UserController {
 
     @RequestMapping("/reg")
 
-    public Object reg(String username,String password){
+    public Object reg(String username,String password,String githubaddress){
 
 
         if(!StringUtils.hasLength(username) || !StringUtils.hasLength(password)){
             return AjaxResult.fail(-1,"非法请求!");
         }
 
-        int result = userService.add(username, SecurityUtil.encrypt(password));
+        int result = userService.add(username, SecurityUtil.encrypt(password),githubaddress);
         if(result == 1){
             return AjaxResult.success(1);
         }
@@ -80,6 +80,7 @@ public class UserController {
         }
         return null;
     }
+
 
     @RequestMapping("/myinfobyuid")
     public UserInfo myinfobyuid(Integer uid){

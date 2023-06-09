@@ -32,6 +32,14 @@ public class ArticleController {
         return null;
     }
 
+    @RequestMapping("/count")
+    public List<ArticleInfo> initcount(Integer aid){
+        if(aid!=null && aid>0){
+            return articleService.getMyList(aid);
+        }
+        return null;
+    }
+
     @RequestMapping("/detail")
     public Object getDetail(Integer aid){
         if(aid!=null&& aid >0){

@@ -34,6 +34,10 @@
                 <input type="text" id="username">
             </div>
             <div class="row">
+                <span style="font-size: 14px;">Github用户名</span>
+                <input type="text" id="githubaddress">
+            </div>
+            <div class="row">
                 <span>密码</span>
                 <input type="password" id="password">
             </div>
@@ -50,12 +54,18 @@
 <script>
     function mysub(){
         var username = jQuery("#username");
+        var githubaddress = jQuery("#githubaddress");
         var password = jQuery("#password");
         var password2 = jQuery("#password2");
 
         if(username.val() == ""){
             alert("用户名为空!");
             username.focus();
+            return false;
+        }
+        if(githubaddress.val() == ""){
+            alert("Github主页地址为空!");
+            githubaddress.focus();
             return false;
         }
         if(password.val() == ""){
@@ -80,7 +90,8 @@
             type:"POST",
             data:{
                 username:username.val(),
-                password:password.val()
+                password:password.val(),
+                githubaddress:githubaddress.val(),
             },
             success:function(result){
                 if(result.code == 200 && result.data == 1){
