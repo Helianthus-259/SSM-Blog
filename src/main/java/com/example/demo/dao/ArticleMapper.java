@@ -4,6 +4,7 @@ import com.example.demo.model.ArticleInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -17,6 +18,10 @@ public interface ArticleMapper {
 
     public ArticleInfo getDetail(@Param("aid") Integer aid);
 
+    public int updateCount(@Param("aid") Integer aid);
+
+    public void deleteArc(@Param("aid") Integer aid);
+
     public int update(@Param("aid") Integer aid,
                       @Param("uid") Integer uid,
                       @Param("title") String title,
@@ -27,6 +32,6 @@ public interface ArticleMapper {
     public int getTotalCountBykeyword(@Param("title") String title);
 
     public int add(@Param("uid") Integer uid,@Param("title") String title,
-                   @Param("content") String content);
+                   @Param("content") String content,@Param("createtime") Date createtime);
 }
 

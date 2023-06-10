@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 @RestController
 @RequestMapping("/art")
@@ -31,6 +33,7 @@ public class ArticleController {
         }
         return null;
     }
+
 
     @RequestMapping("/count")
     public List<ArticleInfo> initcount(Integer aid){
@@ -115,11 +118,28 @@ public class ArticleController {
     @RequestMapping("/add")
     public int add(String title,String content,HttpServletRequest request){
         //todo:非空校验
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(new Date());
         System.out.println(title);
         UserInfo userInfo = SessionUtil.getLoginUser(request);
         if(userInfo!= null && userInfo.getId()>0){
-            return articleService.add(userInfo.getId(),title,content);
+            return articleService.add(userInfo.getId(),title,content,new Date());
         }
         return 0;
     }
+
+    @RequestMapping("/delArc")
+    public Object Deteleart(Integer aid){
+        System.out.println(aid);
+        if(aid!=null&& aid >0){
+            articleService.deleteArc(aid);
+            ArticleInfo arc = articleService.getDetail(aid);
+            if(arc == null){
+                return AjaxResult.success(1);
+            }
+            return AjaxResult.fail(-1,"删除失败");
+        }
+        return AjaxResult.fail(-1,"删除失败");
+    }
+
 }

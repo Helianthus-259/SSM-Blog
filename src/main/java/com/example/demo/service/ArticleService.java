@@ -5,6 +5,7 @@ import com.example.demo.model.ArticleInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,7 +19,12 @@ public class ArticleService {
     }
 
     public ArticleInfo getDetail(Integer aid){
+        articleMapper.updateCount(aid);
         return articleMapper.getDetail(aid);
+    }
+
+    public void deleteArc(Integer aid){
+        articleMapper.deleteArc(aid);
     }
 
     public int update(Integer aid,Integer uid,String title,String content){
@@ -41,7 +47,7 @@ public class ArticleService {
         return articleMapper.getTotalCountBykeyword(title);
     }
 
-    public int add(Integer uid,String title,String content){
-        return articleMapper.add(uid,title,content);
+    public int add(Integer uid, String title, String content, Date createtime){
+        return articleMapper.add(uid,title,content,createtime);
     }
 }
