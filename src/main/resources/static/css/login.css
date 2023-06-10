@@ -6,9 +6,18 @@
     align-items: center;
 }
 
+.c-container {
+    width: 100%;
+    height: calc(100% - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .login-dialog {
     width: 400px;
-    height: 400px;
+    height: 450px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
 }

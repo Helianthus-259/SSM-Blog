@@ -15,4 +15,7 @@ public interface UserMapper {
     public UserInfo searchByUid(@Param("uid") Integer uid);
 
     public UserInfo getUserByName(@Param("username") String username);
+
+    public void updateByUid(@Param("id") Integer id,@Param("username") String username,
+                            @Param("githubaddress") String githubaddress,@Param("password") String password);
 }

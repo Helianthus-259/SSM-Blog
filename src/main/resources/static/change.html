@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人信息设置</title>
+  <link rel="stylesheet" href="css/conmmon.css">
+  <link rel="stylesheet" href="css/login.css">
+  <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<!-- 导航栏 -->
+<div class="nav">
+  <img src="img/sysu.jpg" alt="">
+  <span class="title">我的博客系统</span>
+  <!-- 用来占据中间位置 -->
+  <div>
+    <label for="changepassword">修改密码</label>
+    <input type="checkbox" id="changepassword" onchange="togglePasswordInputs()">
+  </div>
+
+  <span class="spacer"></span>
+  <a href="blog_list.html">主页</a>
+  <a href="blog_edit.html">写博客</a>
+  <a href="#">个人中心</a>
+  <a href="logout.html">注销</a>
+</div>
+
+
+<!-- 用户个人信息设置部分 -->
+<div class="c-container">
+  <div class="login-dialog">
+    <h3>个人信息设置</h3>
+    <div class="row">
+      <span>用户名</span>
+      <input type="text" id="username" >
+    </div>
+    <div class="row">
+      <span>Github用户名</span>
+      <input type="text" id="githubaddress">
+    </div>
+    <div id="password-inputs" style="display: none;">
+      <div class="row">
+        <span>原密码</span>
+        <input type="password" id="oldpassword">
+      </div>
+      <div class="row">
+        <span>新密码</span>
+        <input type="password" id="newpassword">
+      </div>
+      <div class="row">
+        <span>确认新密码</span>
+        <input type="password" id="newpassword2">
+      </div>
+    </div>
+    <div class="row">
+      <button id="submit" onclick="mysub1()">提交</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function togglePasswordInputs() {
+    var passwordInputsDiv = document.getElementById("password-inputs");
+    var changePasswordCheckbox = document.getElementById("changepassword");
+    if (changePasswordCheckbox.checked) {
+      passwordInputsDiv.style.display = "block";
+    } else {
+      passwordInputsDiv.style.display = "none";
+    }
+  }
+
+  function initchange(){
+    jQuery.ajax({
+      url:"/user/myinfo",
+      type:"POST",
+      data:{},
+      success:function(result){
+        if(result.code==200 && result.data!=null){
+          document.getElementById('username').value = result.data.username;
+          var githubaddress = result.data.githubaddress;
+          if(githubaddress){
+            // 将地址直接显示在链接文本中
+            document.getElementById('githubaddress').value = result.data.githubaddress;
+          }
+        }
+      },
+      error:function(err){
+        alert("err")
+      }
+    });
+  }
+  initchange();
+
+  // 提交按钮点击事件
+  function mysub1() {
+    var username = jQuery("#username");
+    var githubaddress = jQuery("#githubaddress");
+    var oldpassword = jQuery("#oldpassword");
+    var newpassword = jQuery("#newpassword");
+    var newpassword2 = jQuery("#newpassword2");
+
+    if(username.val()==""){
+      alert("用户名不能为空！")
+      return;
+    }
+
+    if (oldpassword.val() != "" && newpassword.val() != newpassword2.val()) {
+      alert("两次输入的新密码不相等!");
+      newpassword.focus();
+      return;
+    }
+
+    jQuery.ajax({
+      url: "/user/update",
+      type: "POST",
+      data: {
+        username: username.val(),
+        githubaddress: githubaddress.val(),
+        oldpassword: oldpassword.val(),
+        newpassword: newpassword.val()
+      },
+      success: function(result) {
+        if (result.code == 200) {
+          alert("修改成功！");
+          location.href="/login.html";
+        } else {
+          alert(result.msg);
+        }
+      },
+      error: function() {
+        alert("请求失败，请检查网络连接");
+      }
+    });
+  }
+</script>
+</body>
+</html>

@@ -27,5 +27,11 @@ public class UserService {
         return userMapper.getUserByName(username);
     }
 
+    public void UpdateById(Integer id,String username,String githubaddress,String password){
+        System.out.println(username);
+        System.out.println(githubaddress);
+        System.out.println(password);
+        userMapper.updateByUid(id,username,githubaddress,password);
+    }
 }
 

@@ -9,6 +9,28 @@
     <link rel="stylesheet" href="css/conmmon.css">
     <link rel="stylesheet" href="css/blog_list.css">
     <script src="js/jquery.min.js"></script>
+
+    <style>
+        button1 {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button1:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -38,6 +60,9 @@
             <div class="counter" id="counterDiv">
                 <span>-</span>
                 <span>-</span>
+            </div>
+            <div class="counter" id="counterDiv">
+                <button class="button1" onclick="location.href='change.html'">修改个人信息</button>
             </div>
         </div>
     </div>
@@ -102,7 +127,7 @@
     initList(); // 当浏览器渲染引擎执行到此行的时候就会调用 initList() 方法
 
     // 获取个人信息
-    function myInfo(){
+    function myfo(){
         jQuery.ajax({
                 url:"/user/myinfo",
                 type:"POST",
@@ -126,7 +151,7 @@
                 }
             });
     }
-    myInfo();
+    myfo();
 
     // 退出
     function onExit(){

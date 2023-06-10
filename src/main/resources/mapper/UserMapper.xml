@@ -18,4 +18,14 @@
         select * from userinfo
         where username=#{username}
     </select>
+
+    <update id="updateByUid">
+        update userinfo
+        <set>
+            <if test="username != null">username=#{username},</if>
+            githubaddress=#{githubaddress},
+            <if test="password != null">password=#{password},</if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>

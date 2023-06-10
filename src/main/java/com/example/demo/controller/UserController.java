@@ -91,4 +91,33 @@ public class UserController {
 
         return null;
     }
+
+    @RequestMapping("/update")
+    public Object upd(HttpServletRequest request,String username,String githubaddress,String oldpassword,String newpassword){
+        System.out.println(username);
+        System.out.println(githubaddress);
+        System.out.println(oldpassword);
+        System.out.println(newpassword);
+        UserInfo u;
+        String p =null;
+        HttpSession session = request.getSession(false);
+        if(session!=null && session.getAttribute(Constant.SESSION_USERINFO_KEY)!=null){
+            u = (UserInfo) session.getAttribute(Constant.SESSION_USERINFO_KEY);
+            System.out.println(u.getPassword());
+            if(oldpassword != null&& newpassword!=null&&oldpassword!=""&&newpassword!=""){
+                if(SecurityUtil.decrypt(oldpassword,u.getPassword())){
+                    p =SecurityUtil.encrypt(newpassword);
+                }
+                else{
+                    return AjaxResult.fail(-2,"密码错误");
+                }
+            }
+            userService.UpdateById(u.getId(),username,githubaddress,p);
+            return AjaxResult.success(1);
+        }
+        else{
+            return AjaxResult.fail(-1,"未登录");
+        }
+
+    }
 }
