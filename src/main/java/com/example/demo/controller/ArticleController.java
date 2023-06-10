@@ -80,10 +80,32 @@ public class ArticleController {
         return articleService.getList(psize,offset);
     }
 
+    @RequestMapping("/listByKeyword")
+    public List<ArticleInfo> getListByKeyword(Integer pindex,Integer psize,String keyword){
+        if(pindex == null || psize == null||keyword==""){
+            return null;
+        }
+        int offset = (pindex-1)*psize;
+        return articleService.getListByKeyword(psize,offset,keyword);
+    }
+
     @RequestMapping("/totalpage")
     public Integer getTotalCount(Integer psize){
+        System.out.println(psize);
         if(psize!=null){
             int totalCount = articleService.getTotalCount();
+            return (int) Math.ceil(totalCount*1.0/psize);
+        }
+
+        return null;
+    }
+
+    @RequestMapping("/totalpageByKeyword")
+    public Integer getTotalCountBykeyword(Integer psize,String keyword){
+        System.out.println(psize);
+        System.out.println(keyword);
+        if(psize!=null&&keyword!=null){
+            int totalCount = articleService.getTotalCountBykeyword(keyword);
             return (int) Math.ceil(totalCount*1.0/psize);
         }
 

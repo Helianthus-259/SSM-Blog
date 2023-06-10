@@ -18,6 +18,11 @@
     color: #000;
     text-indent: 2em;
     margin-top: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* 行数 */
 }
 
 /* 博客的日期 */

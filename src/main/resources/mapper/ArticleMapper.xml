@@ -17,8 +17,16 @@
         select * from articleinfo limit #{psize} offset #{offset}
     </select>
 
+    <select id="getListByKeyword" resultType="com.example.demo.model.ArticleInfo">
+        select * from articleinfo where title like concat('%', #{title}, '%') limit #{psize} offset #{offset}
+    </select>
+
     <select id="getTotalCount" resultType="java.lang.Integer">
         select count(*) from articleinfo
+    </select>
+
+    <select id="getTotalCountBykeyword" resultType="java.lang.Integer">
+        select count(*) from articleinfo where title like concat('%', #{title}, '%')
     </select>
 
     <insert id="add">

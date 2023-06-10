@@ -29,9 +29,18 @@ public class ArticleService {
         return articleMapper.getList(psize,offset);
     }
 
+    public List<ArticleInfo> getListByKeyword(Integer psize,int offset,String title){
+        return articleMapper.getListByKeyword(psize,offset,title);
+    }
+
     public int getTotalCount(){
         return articleMapper.getTotalCount();
     }
+
+    public int getTotalCountBykeyword(String title){
+        return articleMapper.getTotalCountBykeyword(title);
+    }
+
     public int add(Integer uid,String title,String content){
         return articleMapper.add(uid,title,content);
     }

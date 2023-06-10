@@ -118,6 +118,7 @@
         var pindex = 1; // 当前的页码
         var psize = 3; // 每页显示的条数信息
         var totalpage = 1; // 总共多少页
+        var keyword = ""
 
         // 初始化分页的参数，尝试从 url 中获取 pindex 和 psize
         function initPageParam(){
@@ -129,20 +130,30 @@
            if(pz!=""){
             psize=pz;
            }
+            var key = getURLParam("keyword")
+            if (key != ""){
+                keyword=key;
+            }
         }
         initPageParam();
 
         // 查询总共有多少页的数据
         function getTotalPage(){
             jQuery.ajax({
-                url:"/art/totalpage",
+                url:"/art/totalpageByKeyword",
                 type:"GET",
                 data:{
-                   "psize":psize
+                   "psize":psize,
+                    "keyword":keyword
                 },
                 success:function(result){
                     if(result.code==200 && result.data!=null){
                         totalpage=result.data; 
+                    }
+                    if(totalpage==0){
+                        location.href = "blog_list.html"
+                        alert("查询为空，返回主页！")
+
                     }
                 }
             });
@@ -152,11 +163,12 @@
         // 查询分页数据
         function getList(){
             jQuery.ajax({
-                url:"/art/list",
+                url:"/art/listByKeyword",
                 type:"GET",
                 data:{
                    "pindex":pindex,
-                   "psize":psize
+                   "psize":psize,
+                    "keyword":keyword
                 },
                 success:function(result){
                     if(result.code==200 && result.data!=null && result.data.length>0){
@@ -180,7 +192,7 @@
     
         // 首页
         function firstClick(){
-            location.href = "blog_list.html";
+            location.href = "blog_search.html?pindex="+1+"&psize="+psize+"&keyword="+keyword;
         }
 
         // 上一页
@@ -190,7 +202,7 @@
                 return false;
             }
             pindex = parseInt(pindex)-1;
-            location.href = "blog_list.html?pindex="+pindex+"&psize="+psize;
+            location.href = "blog_search.html?pindex="+pindex+"&psize="+psize+"&keyword="+keyword;
         }
 
         // 下一页
@@ -201,13 +213,13 @@
                 alert("已经是最后一页了");
                 return false;
             }
-            location.href = "blog_list.html?pindex="+pindex+"&psize="+psize;
+            location.href = "blog_search.html?pindex="+pindex+"&psize="+psize+"&keyword="+keyword;
         }
 
         // 末页
         function lastClick(){
             pindex = totalpage;
-            location.href = "blog_list.html?pindex="+pindex+"&psize="+psize;
+            location.href = "blog_search.html?pindex="+pindex+"&psize="+psize+"&keyword="+keyword;
         }
         // 搜索博客
         function searchClick(){
