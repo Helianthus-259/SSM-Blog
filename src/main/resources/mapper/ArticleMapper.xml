@@ -9,16 +9,20 @@
         select * from articleinfo where id=#{aid}
     </select>
 
+    <update id="updateCount">
+        update articleinfo set rcount = rcount + 1 where id=#{aid};
+    </update>
+
     <update id="update">
         update articleinfo set title=#{title},content=#{content} where id=#{aid} and uid=#{uid}
     </update>
 
     <select id="getList" resultType="com.example.demo.model.ArticleInfo">
-        select * from articleinfo limit #{psize} offset #{offset}
+        select * from articleinfo order by rcount desc limit #{psize} offset #{offset}
     </select>
 
     <select id="getListByKeyword" resultType="com.example.demo.model.ArticleInfo">
-        select * from articleinfo where title like concat('%', #{title}, '%') limit #{psize} offset #{offset}
+        select * from articleinfo where title like concat('%', #{title}, '%') order by rcount desc limit #{psize} offset #{offset}
     </select>
 
     <select id="getTotalCount" resultType="java.lang.Integer">
@@ -30,7 +34,11 @@
     </select>
 
     <insert id="add">
-        INSERT INTO articleinfo (uid,title, content)
-        VALUES (#{uid}, #{title}, #{content})
+        INSERT INTO articleinfo (uid,title, content,createtime)
+        VALUES (#{uid}, #{title}, #{content},#{createtime})
     </insert>
+
+    <delete id="deleteArc">
+        DELETE FROM articleinfo WHERE id = #{aid}
+    </delete>
 </mapper>

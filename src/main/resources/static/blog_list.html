@@ -84,7 +84,7 @@
 <body>
 <!-- 导航栏 -->
 <div class="nav">
-    <img src="img/logo2.jpg" alt="">
+    <img src="img/sysu.jpg" alt="">
     <span class="title">我的博客系统</span>
     <!-- 用来占据中间位置 -->
     <div class="search-box">
@@ -132,6 +132,15 @@
         }
         initPageParam();
 
+        var descLength = 200; // 简介最大长度
+        // 字符串截取，将文章正文截取成简介
+        function mySubstr(content){
+            if(content.length>descLength){
+                return content.substr(0,descLength);
+            }
+            return content+"……";
+        }
+
         // 查询总共有多少页的数据
         function getTotalPage(){
             jQuery.ajax({
@@ -166,8 +175,8 @@
                             var item = result.data[i];
                             finalHtml+='<div class="blog">';
                             finalHtml+='<div class="title">'+item.title+'</div>';
-                            finalHtml+='<div class="date">'+item.createtime+'</div>';
-                            finalHtml+='<div class="desc">'+item.content+'</div>';
+                            finalHtml+='<div class="date">'+item.createtime+" "+"访问量:"+item.rcount+'</div>';
+                            finalHtml+='<div class="desc">'+mySubstr(item.content)+'</div>';
                             finalHtml+='<a href="blog_content.html?id='+item.id+'" class="detail">查看全文</a>';
                             finalHtml+='</div>';
                         }

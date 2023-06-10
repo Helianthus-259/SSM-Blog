@@ -112,3 +112,26 @@ html, body {
     display: flex;
     justify-content: space-around;
 }
+
+/* 删除链接 */
+.delete-link {
+    display: inline-block;
+    padding: 6px 16px; /* 将内边距改为6px和16px */
+    background-color: #2196f3; /* Material Design Blue 500 */
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+/* 鼠标悬停时 */
+.delete-link:hover {
+    background-color: #0d47a1; /* Material Design Blue 900 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+}

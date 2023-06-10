@@ -14,7 +14,7 @@
 <body>
 <!-- 导航栏 -->
 <div class="nav">
-    <img src="img/logo2.jpg" alt="">
+    <img src="img/sysu.jpg" alt="">
     <span class="title">我的博客系统</span>
     <!-- 用来占据中间位置 -->
     <span class="spacer"></span>
@@ -71,16 +71,15 @@
                         // 此人发表文章了
                         var html="";
                         result.data.forEach(function(item){
-                            html+='<div class="blog">'+
-                                '<div class="title">'+item.title+'</div>'+
-                                '<div class="date">'+item.createtime+'</div>'+'<div class="desc">'+
-                                    mySubstr(item.content)+' </div>'+
-                                    '<div style="text-align: center;margin-top: 50px;">'+
-                                    '<a href="blog_content.html?id='+item.id+'">查看详情</a>&nbsp;&nbsp;'+
-                                    '<a href="blog_update.html?id='+item.id+
-                                    '">修改</a>&nbsp;&nbsp;<a href="javascript:myDel('+item.id
-                                    +')">删除</a></div>'
-                                    +'</div>';
+                            html += '<div class="blog">' +
+                                '<div class="title">' + item.title + '</div>' +
+                                '<div class="date">' + item.createtime + '</div>' + '<div class="desc">' +
+                                mySubstr(item.content) + ' </div>' +
+                                '<div style="text-align: center;margin-top: 50px;">' +
+                                '<a href="blog_content.html?id=' + item.id + '" class="delete-link">查看详情</a>&nbsp;&nbsp;' +
+                                '<a href="blog_update.html?id=' + item.id +
+                                '" class="delete-link">修改</a>&nbsp;&nbsp;<a class="delete-link" onclick="myDel(' + item.id + ')">删除</a></div>' +
+                                '</div>';
                         });
                         jQuery("#artlistDiv").html(html);
                         // 更新计数器
@@ -150,6 +149,30 @@
             });
         }
     }
+
+
+    function myDel(id) {
+        // 这里可以写删除操作的代码，比如 AJAX 请求等
+        jQuery.ajax({
+            url:"/art/delArc",
+            type:"Delete",
+            data:{
+                "aid":id
+            },
+            success:function(result){
+                alert('删除成功');
+                location.reload()
+            },
+            error:function(err){
+                if(err!=null && err.status==401){
+                    alert("用户未登录，即将跳转到登录页！");
+                    // 已经被拦截器拦截了，未登录
+                    location.href = "/login.html";
+                }
+            }
+        });
+    }
+
 </script>
 
 </html>
