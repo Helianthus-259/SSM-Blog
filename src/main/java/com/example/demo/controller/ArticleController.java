@@ -132,7 +132,9 @@ public class ArticleController {
     public Object Deteleart(Integer aid){
         System.out.println(aid);
         if(aid!=null&& aid >0){
-            articleService.deleteArc(aid);
+            if(!articleService.deleteArc(aid)){
+                return AjaxResult.fail(-1,"删除失败");
+            }
             ArticleInfo arc = articleService.getDetail(aid);
             if(arc == null){
                 return AjaxResult.success(1);

@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import lombok.Data;
+@Data
 public class CommentInfo {
     private int id;
     private int aid;

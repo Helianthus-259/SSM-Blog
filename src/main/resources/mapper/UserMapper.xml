@@ -19,7 +19,7 @@
         where username=#{username}
     </select>
 
-    <update id="update">
+    <update id="uploadphoto">
         update userinfo set photo = #{photo}
     </update>
 

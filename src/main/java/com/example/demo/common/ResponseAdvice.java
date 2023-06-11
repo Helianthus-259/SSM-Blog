@@ -1,5 +1,6 @@
 package com.example.demo.common;
 
+import com.example.demo.util.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.springframework.core.MethodParameter;
@@ -29,6 +30,9 @@ public class ResponseAdvice implements ResponseBodyAdvice {
         if(body instanceof String){
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(AjaxResult.success(body));
+        }
+        if(body instanceof Result){
+            return body;
         }
         return AjaxResult.success(body);
     }

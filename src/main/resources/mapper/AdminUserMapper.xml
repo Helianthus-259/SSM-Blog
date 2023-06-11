@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.AdminUserMapper">
+
+
+    <insert id="add">
+        insert into userinfo(username,password,githubaddress)
+        values(#{username},#{password},#{githubaddress})
+    </insert>
+
+    <select id="login" resultType="com.example.demo.model.AdminUserInfo">
+        select * from adminuserinfo
+        where username=#{username} and password=#{password}
+    </select>
+
+    <select id="searchByUid" resultType="com.example.demo.model.UserInfo">
+        select * from userinfo where id=#{uid}
+    </select>
+    <select id="getAdminUserByName" resultType="com.example.demo.model.AdminUserInfo">
+        select * from adminuserinfo
+        where username=#{username}
+    </select>
+
+    <update id="updateByUid">
+        update userinfo
+        <set>
+            <if test="username != null">username=#{username},</if>
+            githubaddress=#{githubaddress},
+            <if test="password != null">password=#{password},</if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>

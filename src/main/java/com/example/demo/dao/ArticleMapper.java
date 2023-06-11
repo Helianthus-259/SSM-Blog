@@ -6,11 +6,13 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ArticleMapper {
 
     public List<ArticleInfo> getList(@Param("psize") Integer psize, @Param("offset") int offset);
+
 
     public List<ArticleInfo> getListByKeyword(@Param("psize") Integer psize, @Param("offset") int offset,@Param("title") String title);
 
@@ -20,7 +22,7 @@ public interface ArticleMapper {
 
     public int updateCount(@Param("aid") Integer aid);
 
-    public void deleteArc(@Param("aid") Integer aid);
+    public int deleteArc(@Param("aid") Integer aid);
 
     public int update(@Param("aid") Integer aid,
                       @Param("uid") Integer uid,
