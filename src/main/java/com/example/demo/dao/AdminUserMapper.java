@@ -12,4 +12,14 @@ public interface AdminUserMapper {
                                     @Param("password") String password);
 
     public AdminUserInfo getAdminUserByName(@Param("username") String username);
+
+    public AdminUserInfo getAdminUserById(@Param("id") Integer id);
+
+    public int updateName(@Param("id") int id,@Param("username") String username,
+                          @Param("nickName") String nickName);
+
+    public int updatePassword(@Param("id") int id,@Param("password") String password);
+
+    public int add(@Param("username") String username,
+                   @Param("password") String password,@Param("nickName") String nickName);
 }

@@ -12,8 +12,9 @@ $(function () {
                 url: "/admin/profile/name",
                 data: params,
                 success: function (r) {
-                    if (r == 'success') {
+                    if (r.data == 1) {
                         alert('修改成功');
+                        window.location.href = '/admin/login';
                     } else {
                         alert('修改失败');
                         $("#updateUserNameButton").prop("disabled",false);
@@ -37,7 +38,7 @@ $(function () {
                 data: params,
                 success: function (r) {
                     console.log(r);
-                    if (r == 'success') {
+                    if (r.data == 1) {
                         alert('修改成功');
                         window.location.href = '/admin/login';
                     } else {
@@ -66,16 +67,16 @@ function validUserNameForUpdate(userName, nickName) {
         $('#updateUserName-info').html("昵称不能为空！");
         return false;
     }
-    if (!validUserName(userName)) {
-        $('#updateUserName-info').css("display", "block");
-        $('#updateUserName-info').html("请输入符合规范的登录名！");
-        return false;
-    }
-    if (!validCN_ENString2_18(nickName)) {
-        $('#updateUserName-info').css("display", "block");
-        $('#updateUserName-info').html("请输入符合规范的昵称！");
-        return false;
-    }
+    // if (!validUserName(userName)) {
+    //     $('#updateUserName-info').css("display", "block");
+    //     $('#updateUserName-info').html("请输入符合规范的登录名！");
+    //     return false;
+    // }
+    // if (!validCN_ENString2_18(nickName)) {
+    //     $('#updateUserName-info').css("display", "block");
+    //     $('#updateUserName-info').html("请输入符合规范的昵称！");
+    //     return false;
+    // }
     return true;
 }
 
@@ -93,10 +94,10 @@ function validPasswordForUpdate(originalPassword, newPassword) {
         $('#updatePassword-info').html("新密码不能为空！");
         return false;
     }
-    if (!validPassword(newPassword)) {
-        $('#updatePassword-info').css("display", "block");
-        $('#updatePassword-info').html("请输入符合规范的密码！");
-        return false;
-    }
+    // if (!validPassword(newPassword)) {
+    //     $('#updatePassword-info').css("display", "block");
+    //     $('#updatePassword-info').html("请输入符合规范的密码！");
+    //     return false;
+    // }
     return true;
 }

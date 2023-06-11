@@ -18,4 +18,18 @@ public class AdminUserService {
     public AdminUserInfo getAdminUserByName(String username){
         return adminUserMapper.getAdminUserByName(username);
     }
+
+    public AdminUserInfo getUserDetailById(Integer id){
+        return adminUserMapper.getAdminUserById(id);
+    }
+
+    public Boolean updateName(int id,String username,String nickName){
+        return  adminUserMapper.updateName(id,username,nickName)>0;
+    }
+    public Boolean updatePassword(int id,String password){
+        return  adminUserMapper.updatePassword(id,password)>0;
+    }
+    public Boolean add(String username,String password,String nickName){
+        return adminUserMapper.add(username,password,nickName)>0;
+    }
 }

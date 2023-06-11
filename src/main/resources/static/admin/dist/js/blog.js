@@ -4,9 +4,11 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
-            {label: '标题', name: 'title', index: 'title', width: 140},
-            {label: '浏览量', name: 'rcount', index: 'rcount', width: 60},
-            {label: '添加时间', name: 'createtime', index: 'createtime', width: 90}
+            {label: '用户名', name: 'username', index: 'username', width: 80},
+            {label: '标题', name: 'title', index: 'title', width: 120},
+            {label: '内容', name: 'content', index: 'connent', width: 120},
+            {label: '浏览量', name: 'rcount', index: 'rcount', width: 80},
+            {label: '创建时间', name: 'createtime', index: 'createtime', width: 90}
         ],
         height: 700,
         rowNum: 18,

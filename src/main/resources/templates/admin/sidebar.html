@@ -3,7 +3,7 @@
 <aside th:fragment="sidebar-fragment(path)" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a th:href="@{/admin/index}" class="brand-link">
-        <img th:src="@{/admin/dist/img/logo.png}" alt="ssm-cluster Logo" class="brand-image img-circle elevation-3"
+        <img th:src="@{/img/sysu.jpg}" alt="ssm-cluster Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">blog</span>
     </a>
@@ -29,18 +29,18 @@
                     <a th:href="@{/admin/index}" th:class="${path}=='index'?'nav-link active':'nav-link'">
                         <i class="nav-icon fa fa-dashboard"></i>
                         <p>
-                            Dashboard
+                            数据面板
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a th:href="@{/admin/blogs/edit}" th:class="${path}=='edit'?'nav-link active':'nav-link'">
-                        <i class="nav-icon fa fa fa-pencil-square-o"></i>
-                        <p>
-                            发布博客
-                        </p>
-                    </a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a th:href="@{/admin/blogs/edit}" th:class="${path}=='edit'?'nav-link active':'nav-link'">-->
+<!--                        <i class="nav-icon fa fa fa-pencil-square-o"></i>-->
+<!--                        <p>-->
+<!--                            发布博客-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
                 <li class="nav-header">管理模块</li>
                 <li class="nav-item">
                     <a th:href="@{/admin/blogs}" th:class="${path}=='blogs'?'nav-link active':'nav-link'">
@@ -74,27 +74,27 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a th:href="@{/admin/links}" th:class="${path}=='links'?'nav-link active':'nav-link'">
-                        <i class="fa fa-heart nav-icon" aria-hidden="true"></i>
-                        <p>
-                            友情链接
-                        </p>
-                    </a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a th:href="@{/admin/links}" th:class="${path}=='links'?'nav-link active':'nav-link'">-->
+<!--                        <i class="fa fa-heart nav-icon" aria-hidden="true"></i>-->
+<!--                        <p>-->
+<!--                            友情链接-->
+<!--                        </p>-->
+<!--                    </a>-->
+<!--                </li>-->
                 <li class="nav-header">系统管理</li>
                 <li class="nav-item">
                     <a th:href="@{/admin/configurations}"
                        th:class="${path}=='configurations'?'nav-link active':'nav-link'">
                         <i class="fa fa-wrench nav-icon"></i>
-                        <p>系统配置</p>
+                        <p>添加管理员</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a th:href="@{/admin/profile}"
                        th:class="${path}=='profile'?'nav-link active':'nav-link'">
                         <i class="fa fa-user-secret nav-icon"></i>
-                        <p>修改密码</p>
+                        <p>修改设置</p>
                     </a>
                 </li>
                 <li class="nav-item">

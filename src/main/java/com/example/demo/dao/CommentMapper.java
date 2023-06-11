@@ -16,4 +16,6 @@ public interface CommentMapper {
                    @Param("content") String content,@Param("createtime") Date createtime);
 
     public int delete(@Param("id") Integer id);
+
+    public  List<CommentInfo> getCommentList(@Param("psize") Integer psize, @Param("offset") int offset);
 }

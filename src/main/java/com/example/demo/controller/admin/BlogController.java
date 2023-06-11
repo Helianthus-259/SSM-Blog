@@ -23,6 +23,8 @@ public class BlogController {
 
     @GetMapping("/blogs")
     public String list(HttpServletRequest request) {
+        Object loginUserId = request.getSession().getAttribute("loginUserId");
+        if(loginUserId==null) return "redirect:/admin/login";
         request.setAttribute("path", "blogs");
         return "admin/blog";
     }

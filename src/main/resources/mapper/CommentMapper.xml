@@ -15,4 +15,13 @@
         select count(*) from commentinfo
     </select>
 
+
+    <select id="getCommentList" resultType="com.example.demo.model.CommentInfo">
+        select * from commentinfo  limit #{psize} offset #{offset}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM commentinfo WHERE id = #{id}
+    </delete>
+
 </mapper>
