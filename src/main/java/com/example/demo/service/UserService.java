@@ -33,5 +33,8 @@ public class UserService {
         System.out.println(password);
         userMapper.updateByUid(id,username,githubaddress,password);
     }
+    public UserInfo uploadphoto(byte[] photo) {
+        return uploadphoto(photo);
+    }
 }
 

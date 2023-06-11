@@ -7,7 +7,7 @@ public class UserInfo {
     private int id;
     private String username;
     private String password;
-    private String photo;
+    private byte[] photo;
     private String githubaddress;
     private String createtime;
     private String updatetime;

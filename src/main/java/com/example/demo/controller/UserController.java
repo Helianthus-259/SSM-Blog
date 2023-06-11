@@ -92,6 +92,23 @@ public class UserController {
         return null;
     }
 
+    @RequestMapping("/uploadphoto")
+    public UserInfo uploadphoto(byte[] photo){
+        if(photo != null){
+            return userService.uploadphoto(photo);
+        }
+        return null;
+    }
+
+    @RequestMapping("/photoinfo")
+    public UserInfo photoinfo(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session!=null && session.getAttribute(Constant.SESSION_USERINFO_KEY)!=null){
+            return (UserInfo) session.getAttribute(Constant.SESSION_USERINFO_KEY);
+        }
+        return null;
+    }
+
     @RequestMapping("/update")
     public Object upd(HttpServletRequest request,String username,String githubaddress,String oldpassword,String newpassword){
         System.out.println(username);

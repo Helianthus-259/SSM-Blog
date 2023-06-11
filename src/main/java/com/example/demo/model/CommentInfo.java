@@ -6,5 +6,5 @@ public class CommentInfo {
     private int aid;
     private int uid;
     private String content;
-    private String createTime;
+    private String createtime;
 }

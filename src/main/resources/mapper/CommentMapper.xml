@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.CommentMapper">
+
+    <select id="getList" resultType="com.example.demo.model.CommentInfo">
+        select * from commentinfo where aid=#{aid}
+    </select>
+
+    <insert id="add">
+        INSERT INTO commentinfo (uid, aid, content,createtime)
+        VALUES (#{uid}, #{aid}, #{content},#{createtime})
+    </insert>
+
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        select count(*) from commentinfo
+    </select>
+
+</mapper>

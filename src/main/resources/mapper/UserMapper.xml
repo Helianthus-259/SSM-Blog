@@ -19,6 +19,15 @@
         where username=#{username}
     </select>
 
+    <update id="update">
+        update userinfo set photo = #{photo}
+    </update>
+
+    <update id="update">
+        update  set title=#{title},content=#{content} where id=#{aid} and uid=#{uid}
+    </update>
+
+
     <update id="updateByUid">
         update userinfo
         <set>
