@@ -41,6 +41,8 @@ public class CommentService {
         return commentMapper.delete(id);
     }
 
+    public int deleteByuid(Integer uid){ return commentMapper.deleteByuid(uid);}
+
     public PageResult getCommentPage(Integer psize, int pnum){
 //        System.out.println(pnum);
 //        System.out.println(psize);

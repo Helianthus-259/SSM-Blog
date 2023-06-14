@@ -38,6 +38,10 @@ public class ArticleService {
     public Boolean deleteArc(Integer aid){
         return articleMapper.deleteArc(aid)>0;
     }
+
+    public Boolean deleteArcByuid(Integer uid){
+        return articleMapper.deleteArcByuid(uid)>0;
+    }
     public Boolean deleteArcList(Integer[] aid){
         Boolean b = true;
         for (Integer num : aid) {

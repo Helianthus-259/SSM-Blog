@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,7 +82,10 @@ public class UserController {
         UserInfo u = userService.getUserByName(username);
         if(u!=null) return AjaxResult.fail(-1,"用户名重复!");
 
-        int result = userService.add(username, SecurityUtil.encrypt(password),githubaddress);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(new Date());
+        // 添加注册时间
+        int result = userService.add(username, SecurityUtil.encrypt(password),githubaddress,new Date());
         if(result == 1){
             return AjaxResult.success(1);
         }

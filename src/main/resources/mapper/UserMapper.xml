@@ -31,6 +31,17 @@
         update  set title=#{title},content=#{content} where id=#{aid} and uid=#{uid}
     </update>
 
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        select count(*) from userinfo
+    </select>
+
+    <select id="getUserList" resultType="com.example.demo.model.UserInfo">
+        select * from userinfo  limit #{psize} offset #{offset}
+    </select>
+
+    <delete id="delete">
+        DELETE FROM userinfo WHERE id = #{id}
+    </delete>
 
     <update id="updateByUid">
         update userinfo

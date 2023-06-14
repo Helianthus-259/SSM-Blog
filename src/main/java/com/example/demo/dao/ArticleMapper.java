@@ -24,6 +24,8 @@ public interface ArticleMapper {
 
     public int deleteArc(@Param("aid") Integer aid);
 
+    public int deleteArcByuid(@Param("uid") Integer uid);
+
     public int update(@Param("aid") Integer aid,
                       @Param("uid") Integer uid,
                       @Param("title") String title,

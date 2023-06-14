@@ -10,6 +10,4 @@ public class UserInfo {
     private String photo;
     private String githubaddress;
     private String createtime;
-    private String updatetime;
-    private String state;
 }

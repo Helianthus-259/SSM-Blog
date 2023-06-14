@@ -17,5 +17,7 @@ public interface CommentMapper {
 
     public int delete(@Param("id") Integer id);
 
+    public int deleteByuid(@Param("uid") Integer uid);
+
     public  List<CommentInfo> getCommentList(@Param("psize") Integer psize, @Param("offset") int offset);
 }

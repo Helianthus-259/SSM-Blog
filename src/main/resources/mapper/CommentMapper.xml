@@ -24,4 +24,8 @@
         DELETE FROM commentinfo WHERE id = #{id}
     </delete>
 
+    <delete id="deleteByuid">
+        DELETE FROM commentinfo WHERE uid = #{uid}
+    </delete>
+
 </mapper>
