@@ -35,4 +35,16 @@
         update adminuserinfo set password=#{password} where id=#{id}
     </update>
 
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        select count(*) from adminuserinfo
+    </select>
+
+    <select id="getList" resultType="com.example.demo.model.AdminUserInfo">
+        select * from adminuserinfo  limit #{psize} offset #{offset}
+    </select>
+
+    <delete id="deleteAdmin">
+        DELETE FROM adminuserinfo WHERE id = #{id}
+    </delete>
+
 </mapper>

@@ -17,7 +17,7 @@
 
 .login-dialog {
     width: 400px; /* 设置登录对话框的宽度为400px */
-    height: 400px; /* 设置登录对话框的高度为400px */
+    height: 450px; /* 设置登录对话框的高度为400px */
     background-color: rgba(255, 255, 255, 0.8); /* 将登录对话框的背景颜色设置为半透明白色 */
     border-radius: 10px; /* 添加圆角边框半径为10px */
 }

@@ -78,6 +78,9 @@ public class UserController {
             return AjaxResult.fail(-1,"非法请求!");
         }
 
+        UserInfo u = userService.getUserByName(username);
+        if(u!=null) return AjaxResult.fail(-1,"用户名重复!");
+
         int result = userService.add(username, SecurityUtil.encrypt(password),githubaddress);
         if(result == 1){
             return AjaxResult.success(1);

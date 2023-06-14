@@ -94,6 +94,60 @@ $(function () {
 
 })
 
+$(function () {
+    $("#jqGrid").jqGrid({
+        url: '/admin/adminuser/list',
+        datatype: "json",
+        colModel: [
+            {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
+            {label: '用户名', name: 'username', index: 'username', width: 80},
+            {label: '昵称', name: 'nickName', index: 'nickName', width: 80},
+        ],
+        height: 700,
+        rowNum: 18,
+        rowList: [10, 20, 50],
+        styleUI: 'Bootstrap',
+        loadtext: '信息读取中...',
+        rownumbers: false,
+        rownumWidth: 20,
+        autowidth: true,
+        multiselect: true,
+        pager: "#jqGridPager",
+        jsonReader: {
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
+        },
+        prmNames: {
+            page: "page",
+            rows: "limit",
+            order: "order",
+        },
+        gridComplete: function () {
+            //隐藏grid底部滚动条
+            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
+        }
+    });
+
+    $(window).resize(function () {
+        $("#jqGrid").setGridWidth($(".card-body").width());
+    });
+    function coverImageFormatter(cellvalue) {
+        return "<img src='" + cellvalue + "' height=\"120\" width=\"160\" alt='coverImage'/>";
+    }
+
+    function statusFormatter(cellvalue) {
+        if (cellvalue == 0) {
+            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">草稿</button>";
+        }
+        else if (cellvalue == 1) {
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">发布</button>";
+        }
+    }
+
+});
+
 // function validUserNameForUpdate(userName, nickName) {
 //     if (isNull(userName) || userName.trim().length < 1) {
 //         $('#updateUserName-info').css("display", "block");

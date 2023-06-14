@@ -3,11 +3,13 @@ package com.example.demo.controller.admin;
 import com.example.demo.common.AjaxResult;
 import com.example.demo.common.SecurityUtil;
 import com.example.demo.model.AdminUserInfo;
-import com.example.demo.model.UserInfo;
 import com.example.demo.service.AdminUserService;
 import com.example.demo.service.ArticleService;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.UserService;
+import com.example.demo.util.PageResult;
+import com.example.demo.util.Result;
+import com.example.demo.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -83,6 +86,8 @@ public class AdminController {
 
     @GetMapping("/profile")
     public String profile(HttpServletRequest request) {
+        Object loginUserid = request.getSession().getAttribute("loginUserId");
+        if(loginUserid==null) return "redirect:/admin/login";
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
         AdminUserInfo adminUser = adminUserService.getUserDetailById(loginUserId);
         if (adminUser == null) {
@@ -145,6 +150,42 @@ public class AdminController {
         request.getSession().removeAttribute("loginUserName");
         request.getSession().removeAttribute("errorMsg");
         return "admin/login";
+    }
+
+    @GetMapping("/adminuser/list")
+    @ResponseBody
+    public Result adlist(@RequestParam Map<String, Object> params) {
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        Integer psize = Integer.parseInt((String) params.get("limit"));
+        Integer pnum = Integer.parseInt((String) params.get("page"));
+        System.out.println(pnum);
+        System.out.println(psize);
+        PageResult pageResult = adminUserService.getAdminUsersPage(psize,pnum);
+        //System.out.println(pageResult);
+        return ResultGenerator.genSuccessResult(pageResult);
+    }
+
+    @GetMapping("/ad")
+    public String tagPage(HttpServletRequest request) {
+        Object loginUserId = request.getSession().getAttribute("loginUserId");
+        if(loginUserId==null) return "redirect:/admin/login";
+        request.setAttribute("path", "tags");
+        return "admin/ad";
+    }
+
+    @PostMapping("/adminuser/delete")
+    @ResponseBody
+    public Result delete(@RequestBody Integer[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (adminUserService.deleteAdminList(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
     }
 
 }
