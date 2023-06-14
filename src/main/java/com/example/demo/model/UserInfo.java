@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class UserInfo {
-    private int id;
+    private Integer id;
     private String username;
     private String password;
-    private byte[] photo;
+    private String photo;
     private String githubaddress;
     private String createtime;
     private String updatetime;

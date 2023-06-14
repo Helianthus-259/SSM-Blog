@@ -1,5 +1,6 @@
 package com.example.demo.common;
 
+import com.example.demo.model.ArticleInfo;
 import com.example.demo.model.UserInfo;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

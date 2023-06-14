@@ -1,9 +1,9 @@
 .login-container {
-    width: 100%;
-    height: calc(100% - 50px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%; /* 设置容器的宽度为100% */
+    height: calc(100% - 50px); /* 设置容器的高度为100%减去50px */
+    display: flex; /* 将容器的内容显示为弹性容器 */
+    justify-content: center; /* 水平居中对齐弹性项目 */
+    align-items: center; /* 垂直居中对齐弹性项目 */
 }
 
 .c-container {
@@ -16,50 +16,50 @@
 
 
 .login-dialog {
-    width: 400px;
-    height: 450px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
+    width: 400px; /* 设置登录对话框的宽度为400px */
+    height: 400px; /* 设置登录对话框的高度为400px */
+    background-color: rgba(255, 255, 255, 0.8); /* 将登录对话框的背景颜色设置为半透明白色 */
+    border-radius: 10px; /* 添加圆角边框半径为10px */
 }
 
 .login-dialog h3 {
-    padding: 50px 0;
-    text-align: center;
+    padding: 50px 0; /* 设置标题的上下内边距为50px，左右内边距为0 */
+    text-align: center; /* 将标题居中对齐 */
 }
 
 .login-dialog .row {
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 50px; /* 设置每一行的高度为50px */
+    display: flex; /* 将每一行的内容显示为弹性容器 */
+    justify-content: center; /* 水平居中对齐弹性项目 */
+    align-items: center; /* 垂直居中对齐弹性项目 */
 }
 
 .login-dialog .row span {
-    display: block;
-    width: 100px;
-    font-weight: 700;
+    display: block; /* 将span元素显示为块级元素 */
+    width: 100px; /* 设置span元素的宽度为100px */
+    font-weight: 700; /* 设置span元素的字体粗细为700 */
 }
 
 .login-dialog .row input {
-    width: 200px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 24px;
-    border-radius: 10px;
-    border: none;
-    outline: none;
-    text-indent: 10px;
+    width: 200px; /* 设置输入框的宽度为200px */
+    height: 40px; /* 设置输入框的高度为40px */
+    line-height: 40px; /* 设置输入框的行高为40px */
+    font-size: 24px; /* 设置输入框的字体大小为24px */
+    border-radius: 10px; /* 添加输入框的圆角边框半径为10px */
+    border: none; /* 去掉输入框的边框 */
+    outline: none; /* 去掉输入框的轮廓 */
+    text-indent: 10px; /* 设置输入框的文本缩进为10px */
 }
 
 .login-dialog button {
-    width: 300px;
-    height: 50px;
-    color: white;
-    background-color: green;
-    border: none;
-    border-radius: 10px;
+    width: 300px; /* 设置按钮的宽度为300px */
+    height: 50px; /* 设置按钮的高度为50px */
+    color: white; /* 设置按钮的文本颜色为白色 */
+    background-color: green; /* 设置按钮的背景颜色为绿色 */
+    border: none; /* 去掉按钮的边框 */
+    border-radius: 10px; /* 添加按钮的圆角边框半径为10px */
 }
 
 .login-dialog button:active {
-    background-color: #666;
+    background-color: #666; /* 当按钮被按下时，设置背景颜色为深灰色 */
 }

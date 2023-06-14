@@ -19,5 +19,7 @@ public interface UserMapper {
     public void updateByUid(@Param("id") Integer id,@Param("username") String username,
                             @Param("githubaddress") String githubaddress,@Param("password") String password);
 
-    public UserInfo uploadphoto(@Param("photo") byte[] photo);
+    public void uploadPhoto(@Param("photo") String photo, @Param("id") Integer id);
+
+    public UserInfo getAvatarURL(@Param("id") Integer id);
 }

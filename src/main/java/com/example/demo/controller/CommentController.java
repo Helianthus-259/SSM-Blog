@@ -31,13 +31,14 @@ public class CommentController {
     @RequestMapping("/add")
     public int add(Integer aid, String content, HttpServletRequest request){
         //todo:非空校验
-        System.out.println(content);
-
+        // System.out.println(content);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(new Date());
 
         UserInfo userInfo = SessionUtil.getLoginUser(request);
         if(userInfo!= null && userInfo.getId()>0){
+            // System.out.println("成功执行后返回的语句"+commentService.add(aid, id, content, new Date()));
+            // 成功将评论插入数据库返回 1，否则返回 0
             return commentService.add(aid, userInfo.getId(), content, new Date());
         }
         return 0;

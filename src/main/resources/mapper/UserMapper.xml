@@ -19,8 +19,12 @@
         where username=#{username}
     </select>
 
-    <update id="uploadphoto">
-        update userinfo set photo = #{photo}
+    <select id="getAvatarURL" resultType="com.example.demo.model.UserInfo">
+        select * from userinfo  where id=#{id}
+    </select>
+
+    <update id="uploadPhoto">
+        update userinfo set photo=#{photo} where id=#{id}
     </update>
 
     <update id="update">

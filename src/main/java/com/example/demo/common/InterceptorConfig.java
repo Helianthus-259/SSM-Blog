@@ -12,19 +12,21 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Autowired
     private LoginInterceptor loginInterceptor;
-
+    // 不被拦截的路径
     List<String> excludes = new ArrayList<String>(){{
         add("/**/*.html");
         add("/js/**");
         add("/css/**");
         add("/img/**");
-        add("/editor.md/**");
+        // add("/editor.md/**");
         add("/user/login");
         add("/user/reg");
         add("/art/detail");
         add("/user/myinfobyuid");
         add("/art/list");
         add("/art/totalpage");
+        add("/comment/list");
+        add("/avatar/**");
     }};
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

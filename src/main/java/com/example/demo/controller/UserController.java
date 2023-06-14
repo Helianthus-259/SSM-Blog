@@ -1,18 +1,29 @@
 package com.example.demo.controller;
 
-import com.example.demo.common.AjaxResult;
-import com.example.demo.common.Constant;
-import com.example.demo.common.SecurityUtil;
+import com.example.demo.common.*;
 import com.example.demo.model.UserInfo;
 import com.example.demo.service.UserService;
+import io.lettuce.core.dynamic.annotation.Param;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import static com.example.demo.common.FileUtils.delAllFile;
 
 @RestController
 @RequestMapping("/user")
@@ -21,6 +32,42 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+//    @RequestMapping("/avatarInfo")
+//    public Object avatarInfo(HttpServletRequest request) {
+//        UserInfo userInfo = SessionUtil.getLoginUser(request);
+//        if(userInfo!= null && userInfo.getId()>0){
+//            UserInfo avatarURL = userService.getAvatarURL(userInfo.getId());
+//            return AjaxResult.success(avatarURL.getPhoto());
+//        }
+//        return null;
+//    }
+    @RequestMapping("/avatarInfo")
+    public Object avatarInfo(HttpServletRequest request) {
+        UserInfo userInfo = SessionUtil.getLoginUser(request);
+
+        if(userInfo!=null && userInfo.getId()>0){
+            UserInfo avatarURL = userService.getAvatarURL(userInfo.getId());
+            if(avatarURL!=null && avatarURL.getId()>0){
+                return AjaxResult.success(avatarURL.getPhoto());
+            }
+        }
+        return null;
+    }
+
+    @PostMapping("/uploadPhoto")
+    public Object uploadPhoto(MultipartFile photo, HttpServletRequest request) throws IOException{
+        String url = FileUtils.uploads(photo);
+        UserInfo userInfo = SessionUtil.getLoginUser(request);
+
+        // 将头像url更新进入数据库，并响应前端上传头像请求
+        if(userInfo!= null && userInfo.getId()>0){
+            userService.uploadPhoto(url, userInfo.getId());
+            return AjaxResult.success(url);
+        }
+        return null;
+    }
+
 
     @RequestMapping("/reg")
 
@@ -37,6 +84,7 @@ public class UserController {
         }
         return AjaxResult.fail(-1,"注册失败!");
     }
+
 
     @RequestMapping("/login")
     public Object login(HttpServletRequest request, String username, String password){
@@ -92,13 +140,10 @@ public class UserController {
         return null;
     }
 
-    @RequestMapping("/uploadphoto")
-    public UserInfo uploadphoto(byte[] photo){
-        if(photo != null){
-            return userService.uploadphoto(photo);
-        }
-        return null;
-    }
+
+
+
+
 
     @RequestMapping("/photoinfo")
     public UserInfo photoinfo(HttpServletRequest request){
