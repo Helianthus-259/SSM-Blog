@@ -27,7 +27,8 @@
     <a href="myblog_list.html">个人主页</a>
     <a href="blog_list.html">博客论坛</a>
     <a href="blog_edit.html">写博客</a>
-    <a href="login.html">登录</a>
+<!--    <a href="login.html">登录</a>-->
+    <a href="javascript:onExit()">退出登录</a>
 <!--    <a href="#">注销</a>-->
 </div>
 <!-- 编辑框容器 -->
@@ -102,6 +103,28 @@
         });
 
     }
+
+    function onExit(){
+        if(confirm("确认退出？")){
+            // ajax 请求后端进行退出操作
+            jQuery.ajax({
+                url:"/user/logout",
+                type:"POST",
+                data:{},
+                success:function(result){
+                    location.href = "/login.html";
+                },
+                error:function(err){
+                    if(err!=null && err.status==401){
+                        alert("用户未登录，即将跳转到登录页！");
+                        // 已经被拦截器拦截了，未登录
+                        location.href = "/login.html";
+                    }
+                }
+            });
+        }
+    }
+
 </script>
 </body>
 
