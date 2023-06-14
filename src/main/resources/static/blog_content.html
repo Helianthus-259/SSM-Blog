@@ -23,7 +23,8 @@
     <span class="title">我的博客系统</span>
     <!-- 用来占据中间位置 -->
     <span class="spacer"></span>
-    <a href="blog_list.html">主页</a>
+    <a href="myblog_list.html">个人主页</a>
+    <a href="blog_list.html">博客论坛</a>
     <a href="blog_edit.html">写博客</a>
     <a href="login.html">登录</a>
 </div>
@@ -63,90 +64,90 @@
     </div>
 </div>
 <script type="text/javascript">
-            var editormd;
-            function initEdit(md){
-                editormd = editormd.markdownToHTML("editorDiv", {
-                markdown : md, // Also, you can dynamic set Markdown text
-                // htmlDecode : true,  // Enable / disable HTML tag encode.
-                // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
-                });
-            }
+    var editormd;
+    function initEdit(md){
+        editormd = editormd.markdownToHTML("editorDiv", {
+            markdown : md, // Also, you can dynamic set Markdown text
+            // htmlDecode : true,  // Enable / disable HTML tag encode.
+            // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+        });
+    }
 
-            // 获取个人信息
-            function myInfo(uid){
-                // todo:后端添加 /user/myinfobyuid 通过用户 id 查询用户对象
-                jQuery.ajax({
-                        url:"/user/myinfobyuid",
-                        type:"POST",
-                        data:{"uid":uid},
-                        success:function(result){
-                            if(result.code==200 && result.data!=null){
-                                jQuery("#username").text(result.data.username);
-                                var githubaddress = result.data.githubaddress;
-                                if(githubaddress){
-                                    // 将地址替换为真实的 GitHub 地址并赋值给 href 属性
-                                    jQuery("#githubaddress").attr("href", "https://github.com/"+githubaddress);
-                                    // 将地址直接显示在链接文本中
-                                    jQuery("#githubaddress").text(githubaddress);
-                                }else{
-                                    jQuery("#githubaddress").hide()
-                                }
-                            }
-                        },
-                        error:function(err){
-
-                        }
-                    });
-            }
-
-            function initCount(aid){
-                jQuery.ajax({
-                    url:"/art/count",
-                    type:"POST",
-                    data:{"aid":aid},
-                    success:function(result){
-                        //console.dir(result);
-                        if(result.code==200 && result.data!=null
-                            && result.data.length>0){
-                            // 更新计数器
-                            jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
-                        }else{
-                            jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
-                        }
-                    },
-                    error:function(err){
-
+    // 获取个人信息
+    function myInfo(uid){
+        // todo:后端添加 /user/myinfobyuid 通过用户 id 查询用户对象
+        jQuery.ajax({
+            url:"/user/myinfobyuid",
+            type:"POST",
+            data:{"uid":uid},
+            success:function(result){
+                if(result.code==200 && result.data!=null){
+                    jQuery("#username").text(result.data.username);
+                    var githubaddress = result.data.githubaddress;
+                    if(githubaddress){
+                        // 将地址替换为真实的 GitHub 地址并赋值给 href 属性
+                        jQuery("#githubaddress").attr("href", "https://github.com/"+githubaddress);
+                        // 将地址直接显示在链接文本中
+                        jQuery("#githubaddress").text(githubaddress);
+                    }else{
+                        jQuery("#githubaddress").hide()
                     }
-                });
-            }
-
-            // 获取文章的详情信息
-            function getArtDetail(){
-                // 从 url 中获取到文章id
-                var aid = getURLParam("id");
-                if(aid!=null && aid>0){
-                    // 访问后端查询文章详情
-                    jQuery.ajax({
-                        url:"/art/detail",
-                        type:"POST",
-                        data:{"aid":aid},
-                        success:function(result){
-                            if(result.code==200 && result.data!=null){
-                                var art = result.data;
-                                jQuery("#title").text(art.title);
-                                jQuery("#data").text(art.createtime);
-                                jQuery("#rcount").text(art.rcount);
-                                editormd = editormd.markdownToHTML("editorDiv", {
-                                    markdown : art.content
-                                });
-                                myInfo(art.uid);
-                                initCount(art.uid)
-                            }
-                        }
-                    });
                 }
+            },
+            error:function(err){
+
             }
-            getArtDetail();
+        });
+    }
+
+    function initCount(aid){
+        jQuery.ajax({
+            url:"/art/count",
+            type:"POST",
+            data:{"aid":aid},
+            success:function(result){
+                //console.dir(result);
+                if(result.code==200 && result.data!=null
+                    && result.data.length>0){
+                    // 更新计数器
+                    jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
+                }else{
+                    jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
+                }
+            },
+            error:function(err){
+
+            }
+        });
+    }
+
+    // 获取文章的详情信息
+    function getArtDetail(){
+        // 从 url 中获取到文章id
+        var aid = getURLParam("id");
+        if(aid!=null && aid>0){
+            // 访问后端查询文章详情
+            jQuery.ajax({
+                url:"/art/detail",
+                type:"POST",
+                data:{"aid":aid},
+                success:function(result){
+                    if(result.code==200 && result.data!=null){
+                        var art = result.data;
+                        jQuery("#title").text(art.title);
+                        jQuery("#data").text(art.createtime);
+                        jQuery("#rcount").text(art.rcount);
+                        editormd = editormd.markdownToHTML("editorDiv", {
+                            markdown : art.content
+                        });
+                        myInfo(art.uid);
+                        initCount(art.uid)
+                    }
+                }
+            });
+        }
+    }
+    getArtDetail();
 
 </script>
 </body>

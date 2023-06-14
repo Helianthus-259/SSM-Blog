@@ -40,7 +40,8 @@
     <span class="title">我的博客系统</span>
     <!-- 用来占据中间位置 -->
     <span class="spacer"></span>
-    <a href="blog_list.html">主页</a>
+    <a href="myblog_list.html">个人主页</a>
+    <a href="blog_list.html">博客论坛</a>
     <a href="blog_edit.html">写博客</a>
     <a href="javascript:onExit()">退出登录</a>
     <!-- <a href="#">注销</a> -->
@@ -86,70 +87,70 @@
     // 初始化个人列表信息
     function initList(){
         jQuery.ajax({
-                url:"/art/mylist",
-                type:"POST",
-                data:{},
-                success:function(result){
-                    console.dir(result);
-                    if(result.code==200 && result.data!=null
+            url:"/art/mylist",
+            type:"POST",
+            data:{},
+            success:function(result){
+                console.dir(result);
+                if(result.code==200 && result.data!=null
                     && result.data.length>0){
-                        // 此人发表文章了
-                        var html="";
-                        result.data.forEach(function(item){
-                            html += '<div class="blog">' +
-                                '<div class="title">' + item.title + '</div>' +
-                                '<div class="date">' + item.createtime + '</div>' + '<div class="desc">' +
-                                mySubstr(item.content) + ' </div>' +
-                                '<div style="text-align: center;margin-top: 50px;">' +
-                                '<a href="blog_content.html?id=' + item.id + '" class="delete-link">查看详情</a>&nbsp;&nbsp;' +
-                                '<a href="blog_update.html?id=' + item.id +
-                                '" class="delete-link">修改</a>&nbsp;&nbsp;<a class="delete-link" onclick="myDel(' + item.id + ')">删除</a></div>' +
-                                '</div>';
-                        });
-                        jQuery("#artlistDiv").html(html);
-                        // 更新计数器
-                        jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
-                    }else{
-                        // 此人未发表任何文章
-                        jQuery("#artlistDiv").html("<h1>暂无数据</h1>");
-                        jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
-                    }
-                },
-                error:function(err){
-                    if(err!=null && err.status==401){
-                        alert("用户未登录，即将跳转到登录页！");
-                        // 已经被拦截器拦截了，未登录
-                        location.href = "/login.html";
-                    }
+                    // 此人发表文章了
+                    var html="";
+                    result.data.forEach(function(item){
+                        html += '<div class="blog">' +
+                            '<div class="title">' + item.title + '</div>' +
+                            '<div class="date">' + item.createtime + '</div>' + '<div class="desc">' +
+                            mySubstr(item.content) + ' </div>' +
+                            '<div style="text-align: center;margin-top: 50px;">' +
+                            '<a href="blog_content.html?id=' + item.id + '" class="delete-link">查看详情</a>&nbsp;&nbsp;' +
+                            '<a href="blog_update.html?id=' + item.id +
+                            '" class="delete-link">修改</a>&nbsp;&nbsp;<a class="delete-link" onclick="myDel(' + item.id + ')">删除</a></div>' +
+                            '</div>';
+                    });
+                    jQuery("#artlistDiv").html(html);
+                    // 更新计数器
+                    jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
+                }else{
+                    // 此人未发表任何文章
+                    jQuery("#artlistDiv").html("<h1>暂无数据</h1>");
+                    jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
                 }
-            });
+            },
+            error:function(err){
+                if(err!=null && err.status==401){
+                    alert("用户未登录，即将跳转到登录页！");
+                    // 已经被拦截器拦截了，未登录
+                    location.href = "/login.html";
+                }
+            }
+        });
     }
     initList(); // 当浏览器渲染引擎执行到此行的时候就会调用 initList() 方法
 
     // 获取个人信息
     function myfo(){
         jQuery.ajax({
-                url:"/user/myinfo",
-                type:"POST",
-                data:{},
-                success:function(result){
-                    if(result.code==200 && result.data!=null){
-                        jQuery("#username").text(result.data.username);
-                        var githubaddress = result.data.githubaddress;
-                        if(githubaddress){
-                            // 将地址替换为真实的 GitHub 地址并赋值给 href 属性
-                            jQuery("#githubaddress").attr("href", "https://github.com/"+githubaddress);
-                            // 将地址直接显示在链接文本中
-                            jQuery("#githubaddress").text(githubaddress);
-                        }else{
-                            jQuery("#githubaddress").hide()
-                        }
+            url:"/user/myinfo",
+            type:"POST",
+            data:{},
+            success:function(result){
+                if(result.code==200 && result.data!=null){
+                    jQuery("#username").text(result.data.username);
+                    var githubaddress = result.data.githubaddress;
+                    if(githubaddress){
+                        // 将地址替换为真实的 GitHub 地址并赋值给 href 属性
+                        jQuery("#githubaddress").attr("href", "https://github.com/"+githubaddress);
+                        // 将地址直接显示在链接文本中
+                        jQuery("#githubaddress").text(githubaddress);
+                    }else{
+                        jQuery("#githubaddress").hide()
                     }
-                },
-                error:function(err){
-
                 }
-            });
+            },
+            error:function(err){
+
+            }
+        });
     }
     myfo();
 
