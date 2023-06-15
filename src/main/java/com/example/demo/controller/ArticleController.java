@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.text.SimpleDateFormat;
@@ -108,8 +110,15 @@ public class ArticleController {
         System.out.println(psize);
         System.out.println(keyword);
         if(psize!=null&&keyword!=null){
-            int totalCount = articleService.getTotalCountBykeyword(keyword);
-            return (int) Math.ceil(totalCount*1.0/psize);
+            try {
+                String decodedStr = URLDecoder.decode(keyword, StandardCharsets.UTF_8.name());
+                System.out.println(decodedStr); // 解码后的字符串
+                int totalCount = articleService.getTotalCountBykeyword(decodedStr);
+                return (int) Math.ceil(totalCount*1.0/psize);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return null;
