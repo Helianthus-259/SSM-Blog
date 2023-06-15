@@ -110,8 +110,9 @@ public class ArticleService {
 
             // 在这里设置 username
             UserInfo userInfo = userMapper.searchByUid(articleInfo.getUid());
-            adminArticleInfo.setUsername(userInfo.getUsername());
-
+            if(userInfo!=null && userInfo.getId()>0){
+                adminArticleInfo.setUsername(userInfo.getUsername());
+            }
             adminArticleInfoList.add(adminArticleInfo);
         }
         return adminArticleInfoList;

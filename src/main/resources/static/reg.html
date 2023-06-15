@@ -97,9 +97,10 @@
                     alert("注册成功!");
                     if(confirm("是否现在就去登录?")){
                         location.href = "login.html";
-                    }else{
-                        alert(result.msg);
                     }
+                }
+                else{
+                    alert(result.msg);
                 }
             }
         });

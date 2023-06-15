@@ -80,7 +80,9 @@ public class UserController {
         }
 
         UserInfo u = userService.getUserByName(username);
-        if(u!=null) return AjaxResult.fail(-1,"用户名重复!");
+        if(u!=null && u.getId()>0) {
+            return AjaxResult.fail(-1,"用户名重复!");
+        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(new Date());

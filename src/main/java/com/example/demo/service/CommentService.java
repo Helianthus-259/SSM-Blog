@@ -79,10 +79,15 @@ public class CommentService {
             adminCommentinfo.setCreatetime(commentInfo.getCreatetime());
             // 在这里设置 username
             UserInfo userInfo = userMapper.searchByUid(commentInfo.getUid());
-            adminCommentinfo.setUsername(userInfo.getUsername());
+            if(userInfo!=null && userInfo.getId()>0){
+                adminCommentinfo.setUsername(userInfo.getUsername());
+            }
+
             // 在这里设置 articleTitle
             ArticleInfo articleInfo = articleMapper.getDetail(commentInfo.getAid());
-            adminCommentinfo.setArticleTitle(articleInfo.getTitle());
+            if(articleInfo!=null && articleInfo.getId()>0){
+                adminCommentinfo.setArticleTitle(articleInfo.getTitle());
+            }
             adminCommentinfoList.add(adminCommentinfo);
         }
         return adminCommentinfoList;

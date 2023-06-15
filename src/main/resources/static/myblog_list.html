@@ -11,7 +11,7 @@
     <script src="js/jquery.min.js"></script>
 
     <style>
-        button1 {
+        .button1 {
             display: inline-block;
             padding: 10px 20px;
             margin: 10px;
@@ -26,7 +26,7 @@
             cursor: pointer;
         }
 
-        button1:hover {
+        .button1:hover {
             background-color: #3e8e41;
         }
     </style>
@@ -51,7 +51,7 @@
     <!-- 左侧个人信息 -->
     <div class="container-left" >
         <div class="card">
-            <img src="img/doge.jpg" class="avtar" alt="">
+            <img id="img" src="img/doge.jpg"  alt="头像">
             <h3 id="username"></h3>
             <a href="https://github.com/xxxxxx" id="githubaddress" target="_blank">github 地址</a>
             <div class="counter">
@@ -62,8 +62,13 @@
                 <span>-</span>
                 <span>-</span>
             </div>
-            <div class="counter" id="counteriv">
-                <button class="button1" onclick="location.href='change.html'">修改个人信息</button>
+            <div class="counter" id="counterDiv">
+            </div>
+            <div>
+                <button class="button1" onclick="location.href='change.html'">修改信息</button>
+            </div>
+            <div>
+                <button class="button1" onclick="changeAvatar()">更换头像</button> <!-- 添加的更换头像按钮 -->
             </div>
         </div>
     </div>
@@ -82,10 +87,6 @@
             return content.substr(0,descLength);
         }
         return content;
-    }
-
-    function init(){
-
     }
 
     // 初始化个人列表信息
@@ -115,21 +116,112 @@
                     // 更新计数器
                     jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
                 }else{
+                    alert("用户未登录，即将跳转到登录页！");
+                    // 已经被拦截器拦截了，未登录
+                    location.href = "/login.html";
                     // 此人未发表任何文章
                     jQuery("#artlistDiv").html("<h1>暂无数据</h1>");
                     jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
                 }
             },
             error:function(err){
-                if(err!=null && err.status==401){
-                    alert("用户未登录，即将跳转到登录页！");
-                    // 已经被拦截器拦截了，未登录
-                    location.href = "/login.html";
-                }
+                alert("用户未登录，即将跳转到登录页！");
+                // 已经被拦截器拦截了，未登录
+                location.href = "/login.html";
             }
         });
     }
     initList(); // 当浏览器渲染引擎执行到此行的时候就会调用 initList() 方法
+
+    // 通过AJAX请求从服务器获取用户头像信息
+    function AvatarInfo() {
+        jQuery.ajax({
+            url: "/user/avatarInfo",
+            type: "POST",
+            data: {},
+            success: function(result) {
+                if (result.code == 200 && result.data != null) {
+                    // 数据库中存储了该用户的头像，从里面调出返回显示
+                    var avatar = document.getElementById('img');
+                    avatar.src= result.data;
+                    // 测试调出数据是否异常
+                    // alert(result.data);
+                } else {
+                    // 数据库中未存储该用户头像，统一显示狗头
+                    // alert("显示默认图片！");
+                    var avatar = document.getElementById('img');
+                    avatar.src = 'img/doge.jpg';
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+                // 用户未登录
+                alert("头像获取失败！");
+            }
+        });
+    }
+    AvatarInfo();
+
+
+    function changeAvatar() {
+        // 先判定是否登录
+        jQuery.ajax({
+            url: "/user/avatarInfo",
+            type: "POST",
+            data: {},
+            success: function(result) {
+                if(result.data==null){
+                    alert("用户未登录，即将跳转到登录页面！");
+                    location.href = "/login.html"
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("用户未登录，即将跳转到登录页面！");
+                location.href = "/login.html"
+            }
+        });
+        // 弹出文件选择框
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*'; // 在这里限制了可选的文件类型一定是图片
+        input.click();
+        alert("上传头像中。");
+        // 监听文件选择框的change事件
+        input.addEventListener('change', function() {
+            var file = input.files[0];
+            var formData = new FormData();
+            formData.append('photo', file);
+            if (file) {
+                // 发送Ajax请求，将data提交到服务器
+                // 这里使用jQuery的ajax方法进行实现
+                jQuery.ajax({
+                    url: '/user/uploadPhoto',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // 处理上传成功的情况
+                        if(response==null){
+                            alert("头像上传失败！");
+                        } else {
+                            alert("头像上传成功！");
+                        }
+                        location.reload();
+                    },
+                    error:function(err){
+                        if(err!=null && err.status==401){
+                            alert("用户未登录，即将跳转到登录页面！");
+                            location.href = "/login.html"
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
 
     // 获取个人信息
     function myfo(){
@@ -152,7 +244,10 @@
                 }
             },
             error:function(err){
-
+                if(err!=null && err.status==401){
+                    alert("用户未登录，即将跳转到登录页面！");
+                    location.href = "/login.html"
+                }
             }
         });
     }

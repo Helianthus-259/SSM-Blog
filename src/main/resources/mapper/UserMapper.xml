@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.dao.UserMapper">
     <insert id="add">
-        insert into userinfo(username,password,githubaddress)
-        values(#{username},#{password},#{githubaddress})
+        insert into userinfo(username,password,githubaddress,createtime)
+        values(#{username},#{password},#{githubaddress},#{createtime})
     </insert>
 
     <select id="login" resultType="com.example.demo.model.UserInfo">

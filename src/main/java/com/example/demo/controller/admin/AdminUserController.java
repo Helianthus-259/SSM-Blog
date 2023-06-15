@@ -25,8 +25,8 @@ public class AdminUserController {
         }
         Integer psize = Integer.parseInt((String) params.get("limit"));
         Integer pnum = Integer.parseInt((String) params.get("page"));
-        System.out.println(pnum);
-        System.out.println(psize);
+        System.out.println("pnun"+pnum);
+        System.out.println("psize"+psize);
         return ResultGenerator.genSuccessResult(userService.getUserList(psize, pnum));
     }
 
