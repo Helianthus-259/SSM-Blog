@@ -71,7 +71,7 @@ public class ArticleService {
     }
 
     public int add(Integer uid, String title, String content, Date createtime){
-        return articleMapper.add(uid,title,content,createtime);
+        return articleMapper.add(uid,title,content,0, createtime);
     }
 //    public List<ArticleInfo> getAllList(Integer psize, int offset){
 //        return articleMapper.getAllList(psize,offset);

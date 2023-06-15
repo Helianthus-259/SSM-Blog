@@ -36,6 +36,7 @@ public interface ArticleMapper {
     public int getTotalCountBykeyword(@Param("title") String title);
 
     public int add(@Param("uid") Integer uid,@Param("title") String title,
-                   @Param("content") String content,@Param("createtime") Date createtime);
+                   @Param("content") String content,@Param("rcount") Integer rcount,
+                   @Param("createtime") Date createtime);
 }
 

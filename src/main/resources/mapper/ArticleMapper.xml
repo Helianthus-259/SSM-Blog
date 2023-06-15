@@ -36,8 +36,8 @@
     </select>
 
     <insert id="add">
-        INSERT INTO articleinfo (uid,title, content,createtime)
-        VALUES (#{uid}, #{title}, #{content},#{createtime})
+        INSERT INTO articleinfo (uid,title, content,createtime, rcount)
+        VALUES (#{uid}, #{title}, #{content},#{createtime},#{rcount})
     </insert>
 
     <delete id="deleteArc">
