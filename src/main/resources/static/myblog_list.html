@@ -163,22 +163,6 @@
 
 
     function changeAvatar() {
-        // 先判定是否登录
-        jQuery.ajax({
-            url: "/user/avatarInfo",
-            type: "POST",
-            data: {},
-            success: function(result) {
-                if(result.data==null){
-                    alert("用户未登录，即将跳转到登录页面！");
-                    location.href = "/login.html"
-                }
-            },
-            error: function(xhr, status, error) {
-                alert("用户未登录，即将跳转到登录页面！");
-                location.href = "/login.html"
-            }
-        });
         // 弹出文件选择框
         var input = document.createElement('input');
         input.type = 'file';
