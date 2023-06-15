@@ -21,3 +21,129 @@
     text-indent: 2em;
     padding: 10px 0;
 }
+/* 设置评论区容器样式 */
+#comments {
+    margin-top: 30px;
+}
+
+/* 设置评论标题样式 */
+#comments h4 {
+    text-align: center;
+    padding: 10px 0;
+    color: #0080ff; /* 将评论标题颜色修改为粉色 */
+    /*text-shadow: 0 0 5px #ff00ff;*/
+    /*animation: glowing 2s infinite;*/
+}
+
+/* 设置评论列表样式 */
+#commentList {
+    margin-top: 20px;
+}
+
+/* 设置单条评论样式 */
+.comment {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 192, 203, 0.5);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+/* 设置评论内容样式 */
+.comment-text {
+    margin: 0;
+    text-align: left;
+}
+
+/* 设置评论人和评论时间样式 */
+.comment-info {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #ff00ff;
+    font-size: 12px;
+}
+
+/* 设置评论人样式 */
+.comment-info .uid {
+    display: inline-block;
+    font-size: 10px; /* 调整评论人字体大小 */
+}
+
+/* 设置评论时间样式 */
+.comment-info .date {
+    display: inline-block;
+    margin-left: 10px;
+    color: #666;
+    font-size: 10px; /* 调整评论时间字体大小 */
+}
+
+/* 设置评论人样式 */
+.uid {
+    display: block; /* 修改为块级元素，占据一整行 */
+    background-color: #deb065;
+    padding: 5px 10px;
+    color: #fff;
+    margin-bottom: 10px; /* 添加下方间距 */
+    font-size: 10px; /* 调整字体大小 */
+}
+
+/* 设置评论时间样式 */
+.commentdate {
+    display: block; /* 修改为块级元素，占据一整行 */
+    background-color: #79bcd5;
+    padding: 5px 10px;
+    color: #fff;
+    margin-bottom: 10px; /* 添加下方间距 */
+    font-size: 10px; /* 调整字体大小 */
+}
+
+/* 设置评论表单样式 */
+#commentForm {
+    margin-top: 20px;
+}
+
+/* 设置评论文本框样式 */
+#commentText {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* 设置评论文本框获取焦点时的边框样式 */
+#commentText:focus {
+    outline: none;
+    border-color: #0080ff;
+    box-shadow: 0 0 5px #0080ff;
+}
+
+/* 设置提交按钮样式 */
+#commentForm button {
+    display: block;
+    margin: 10px auto;
+    padding: 5px 10px;
+    background-color: #0080ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 0 0 5px #00bfff;
+    animation: glowing 2s infinite;
+}
+
+/* 设置提交按钮的炫光特效动画 */
+@keyframes glowing {
+    0% {
+        box-shadow: 0 0 5px #00bfff;
+    }
+    50% {
+        box-shadow: 0 0 20px #00bfff;
+    }
+    100% {
+        box-shadow: 0 0 5px #00bfff;
+    }
+}

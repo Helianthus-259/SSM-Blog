@@ -27,14 +27,13 @@
     <a href="blog_list.html">博客论坛</a>
     <a href="blog_edit.html">写博客</a>
     <a href="login.html">登录</a>
-    <a href="javascript:onExit()">退出登录</a>
 </div>
 <!-- 版心 -->
 <div class="container">
     <!-- 左侧个人信息 -->
     <div class="container-left">
         <div class="card">
-            <img src="img/doge.jpg" class="avtar" alt="">
+            <img id="avatar" src="img/doge.jpg"  alt="头像">
             <h3 id="username">比特小可爱</h3>
             <a href="https://github.com/xxxxxx" id="githubaddress" target="_blank">github 地址</a>
             <div class="counter">
@@ -44,6 +43,7 @@
             <div class="counter" id="counterDiv">
                 <span>-</span>
                 <span>-</span>
+
             </div>
         </div>
     </div>
@@ -59,118 +59,190 @@
             </div>
             <!-- 博客正文 -->
             <div id="editorDiv">
-
             </div>
+            <!-- 评论区域 -->
+            <div id="comments">
+                <h4>评论区</h4>
+                <div id="commentList">
+                    <!-- 评论列表将动态生成在这里 -->
+                    <div class="comment">
+
+                        <ul class="list-group" id="cmt-list">
+                            <li class="list-group-item">
+                                <span class="uid" style="background-color:#deb065 ;"></span>
+                                <span class="commentdate" style="background-color: #79bcd5;"></span>
+                            </li>
+                        </ul>
+
+                        <div class="content comment-text">这是一条评论内容。</div>
+                    </div>
+                </div>
+                <div id="commentForm">
+                    <textarea id="commentText" placeholder="请输入评论内容"></textarea>
+                    <button onclick="submit()">提交评论</button>
+                </div>
+            </div>
+
         </div>
-    </div>
-</div>
-<script type="text/javascript">
-    var editormd;
-    function initEdit(md){
-        editormd = editormd.markdownToHTML("editorDiv", {
-            markdown : md, // Also, you can dynamic set Markdown text
-            // htmlDecode : true,  // Enable / disable HTML tag encode.
-            // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
-        });
-    }
-
-    // 获取个人信息
-    function myInfo(uid){
-        // todo:后端添加 /user/myinfobyuid 通过用户 id 查询用户对象
-        jQuery.ajax({
-            url:"/user/myinfobyuid",
-            type:"POST",
-            data:{"uid":uid},
-            success:function(result){
-                if(result.code==200 && result.data!=null){
-                    jQuery("#username").text(result.data.username);
-                    var githubaddress = result.data.githubaddress;
-                    if(githubaddress){
-                        // 将地址替换为真实的 GitHub 地址并赋值给 href 属性
-                        jQuery("#githubaddress").attr("href", "https://github.com/"+githubaddress);
-                        // 将地址直接显示在链接文本中
-                        jQuery("#githubaddress").text(githubaddress);
-                    }else{
-                        jQuery("#githubaddress").hide()
-                    }
-                }
-            },
-            error:function(err){
-
+        <script type="text/javascript">
+            var editormd;
+            function initEdit(md){
+                editormd = editormd.markdownToHTML("editorDiv", {
+                    markdown : md, // Also, you can dynamic set Markdown text
+                    // htmlDecode : true,  // Enable / disable HTML tag encode.
+                    // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+                });
             }
-        });
-    }
 
-    function initCount(aid){
-        jQuery.ajax({
-            url:"/art/count",
-            type:"POST",
-            data:{"aid":aid},
-            success:function(result){
-                //console.dir(result);
-                if(result.code==200 && result.data!=null
-                    && result.data.length>0){
-                    // 更新计数器
-                    jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
-                }else{
-                    jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
-                }
-            },
-            error:function(err){
+            // 获取个人信息
+            function myInfo(uid){
+                // todo:后端添加 /user/myinfobyuid 通过用户 id 查询用户对象
+                jQuery.ajax({
+                    url:"/user/myinfobyuid",
+                    type:"POST",
+                    data:{"uid":uid},
+                    success:function(result){
+                        if(result.code==200 && result.data!=null){
+                            jQuery("#username").text(result.data.username);
+                            var githubaddress = result.data.githubaddress;
+                            // 设置头像
+                            var avatar = document.getElementById('avatar');
+                            if(result.data.photo!=null){
+                                // 测试代码
+                                // alert(result.data.photo);
+                                avatar.src= result.data.photo;
+                            }
+                            // alert("mei拿到了头像数据！");
+                            if(githubaddress){
+                                // 将地址替换为真实的 GitHub 地址并赋值给 href 属性
+                                jQuery("#githubaddress").attr("href", "https://github.com/"+githubaddress);
+                                // 将地址直接显示在链接文本中
+                                jQuery("#githubaddress").text(githubaddress);
+                            }else{
+                                jQuery("#githubaddress").hide()
+                            }
+                        }
+                    },
+                    error:function(err){
 
+                    }
+                });
             }
-        });
-    }
 
-    // 获取文章的详情信息
-    function getArtDetail(){
-        // 从 url 中获取到文章id
-        var aid = getURLParam("id");
-        if(aid!=null && aid>0){
-            // 访问后端查询文章详情
-            jQuery.ajax({
-                url:"/art/detail",
-                type:"POST",
-                data:{"aid":aid},
-                success:function(result){
-                    if(result.code==200 && result.data!=null){
-                        var art = result.data;
-                        jQuery("#title").text(art.title);
-                        jQuery("#data").text(art.createtime);
-                        jQuery("#rcount").text(art.rcount);
-                        editormd = editormd.markdownToHTML("editorDiv", {
-                            markdown : art.content
-                        });
-                        myInfo(art.uid);
-                        initCount(art.uid)
+            function initCount(aid){
+                jQuery.ajax({
+                    url:"/art/count",
+                    type:"POST",
+                    data:{"aid":aid},
+                    success:function(result){
+                        //console.dir(result);
+                        if(result.code==200 && result.data!=null
+                            && result.data.length>0){
+                            // 更新计数器
+                            jQuery("#counterDiv").html("<span>" + result.data.length + "</span><span>" + 1 + "</span>");
+                        }else{
+                            jQuery("#counterDiv").html("<span>" + 0 + "</span><span>" + 1 + "</span>");
+                        }
+                    },
+                    error:function(err){
+
                     }
-                }
-            });
-        }
-    }
-    getArtDetail();
+                });
+            }
 
-    function onExit(){
-        if(confirm("确认退出？")){
-            // ajax 请求后端进行退出操作
-            jQuery.ajax({
-                url:"/user/logout",
-                type:"POST",
-                data:{},
-                success:function(result){
-                    location.href = "/login.html";
-                },
-                error:function(err){
-                    if(err!=null && err.status==401){
-                        alert("用户未登录，即将跳转到登录页！");
-                        // 已经被拦截器拦截了，未登录
-                        location.href = "/login.html";
+            // 获取文章的详情信息
+            function getArtDetail(){
+                // 从 url 中获取到文章id
+                var aid = getURLParam("id");
+                if(aid!=null && aid>0){
+                    // 访问后端查询文章详情
+                    jQuery.ajax({
+                        url:"/art/detail",
+                        type:"POST",
+                        data:{"aid":aid},
+                        success:function(result){
+                            if(result.code==200 && result.data!=null){
+                                var art = result.data;
+                                jQuery("#title").text(art.title);
+                                jQuery("#data").text(art.createtime);
+                                jQuery("#rcount").text(art.rcount);
+                                editormd = editormd.markdownToHTML("editorDiv", {
+                                    markdown : art.content
+                                });
+                                myInfo(art.uid);
+                                initCount(art.uid)
+                            }
+                        }
+                    });
+                }
+            }
+            getArtDetail();
+
+            // 加载评论区
+            function getList(){
+                // 从 url 中获取到文章id
+                var aid = getURLParam("id");
+                jQuery.ajax({
+                    url:"/comment/list",
+                    type:"POST",
+                    data:{"aid":aid},
+                    success:function(result){
+                        if(result.code==200 && result.data!=null && result.data.length>0){
+                            // 循环拼接数据到 document
+                            var finalHtml="";
+                            for(var i=0;i<result.data.length;i++){
+                                var item = result.data[i];
+                                finalHtml+='<div class="comment">';
+                                finalHtml+='<div class="content">'+item.content+'</div>';
+                                finalHtml+='<div class="uid">'+'评论人id: '+item.uid+'</div>';
+                                finalHtml+='<div class="commentdate">'+'评论时间: '+item.createtime +'</div>';
+                                finalHtml+='</div>';
+                            }
+                            jQuery("#commentList").html(finalHtml);
+                        }
                     }
-                }
-            });
-        }
-    }
+                });
+            }
+            getList();
 
-</script>
+            // 提交评论
+            function submit() {
+                // 从 url 中获取到文章id
+                var aid = getURLParam("id");
+                var content = jQuery("#commentText").val();
+                // 非空效验
+                if (content == "") {
+                    content.focus();
+                    alert("请先输入评论！");
+                    return false;
+                }
+                console.log(content);
+                jQuery.ajax({
+                    url: "/comment/add",
+                    type: "POST",
+                    data: {
+                        "aid": aid,
+                        "content": content
+                    },
+                    success: function (result) {
+                        if (result.code == 200 && result.data > 0) {
+                            alert("恭喜：评论成功！");
+                            // 刷新页面
+                            location.reload();
+                        } else {
+                            alert("抱歉：评论失败，请重试！");
+                        }
+                    },
+                    error: function (err) {
+                        if (err != null && err.status == 401) {
+                            alert("用户未登录，即将跳转到登录页！");
+                            // 已经被拦截器拦截了，未登录
+                            location.href = "/login.html";
+                        }
+                    }
+                });
+            }
+
+        </script>
 </body>
 </html>
