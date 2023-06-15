@@ -6,7 +6,7 @@ $(function () {
             {label: 'id', name: 'id', index: 'id', width: 50, key: true, hidden: true},
             {label: '用户名', name: 'username', index: 'username', width: 60},
             {label: '密码', name: 'password', index: 'password', width: 60},
-            {label: '头像', name: 'photo', index: 'photo', width: 60},
+            {label: '头像', name: 'photo', index: 'photo', width: 60, formatter: coverImageFormat},
             {label: 'github地址', name: 'githubaddress', index: 'githubaddress', width: 70},
             {label: '创建时间', name: 'createtime', index: 'createtime', width: 70},
         ],
@@ -49,6 +49,10 @@ function reload() {
     $("#jqGrid").jqGrid('setGridParam', {
         page: page
     }).trigger("reloadGrid");
+}
+
+function coverImageFormatter(cellvalue){
+    return "<img src='"+cellvalue+"'height=\"120\" width='\"160\" alt='coverImage'/>";
 }
 
 function deleteUser() {

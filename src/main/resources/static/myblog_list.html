@@ -97,8 +97,7 @@
             data:{},
             success:function(result){
                 console.dir(result);
-                if(result.code==200 && result.data!=null
-                    && result.data.length>0){
+                if(result.code==200 ){
                     // 此人发表文章了
                     var html="";
                     result.data.forEach(function(item){
