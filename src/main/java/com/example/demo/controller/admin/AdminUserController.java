@@ -27,7 +27,7 @@ public class AdminUserController {
         Integer pnum = Integer.parseInt((String) params.get("page"));
         System.out.println("pnun"+pnum);
         System.out.println("psize"+psize);
-        return ResultGenerator.genSuccessResult(userService.getUserList(psize, pnum));
+        return ResultGenerator.genSuccessResult(userService.getUserPage(psize, pnum));
     }
 
     @GetMapping("/users")

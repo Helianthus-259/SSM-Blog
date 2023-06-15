@@ -3,9 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dao.ArticleMapper;
 import com.example.demo.dao.CommentMapper;
 import com.example.demo.dao.UserMapper;
-import com.example.demo.model.AdminCommentinfo;
-import com.example.demo.model.CommentInfo;
-import com.example.demo.model.UserInfo;
+import com.example.demo.model.*;
 import com.example.demo.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +47,7 @@ public class UserService {
         userMapper.updateByUid(id,username,githubaddress,password);
     }
 
+
     public List<UserInfo> getUserList(Integer psize, int offset){
         System.out.println(offset);
         return userMapper.getUserList(psize,offset);
@@ -57,10 +56,7 @@ public class UserService {
     public int getTotalCount(){{
         return userMapper.getTotalCount();
     }}
-    public PageResult getCommentPage(Integer psize, int pnum){
-//        System.out.println(pnum);
-//        System.out.println(psize);
-//        System.out.println((pnum-1)*psize);
+    public PageResult getUserPage(Integer psize, int pnum){
         List<UserInfo> l = getUserList(psize,(pnum-1)*psize);
         PageResult pageResult = new PageResult(l, userMapper.getTotalCount(),psize,pnum);
         System.out.println(pageResult);
